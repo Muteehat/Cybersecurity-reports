@@ -1,0 +1,11 @@
+# Cybersecurity Incident Report
+
+| Section 1: Identify the type of attack that may have caused this  network interruption |  |
+| :---- | ----- |
+| The reason the website is showing “connection timeout” error message is that the web server is overwhelmed by a large number of TCP SYN requests originating from an unfamiliar IP address. The large number of SYN packets caused the server to exhaust its resources causing the connection timeout error message to appear. The logs show that a high number of TCP SYN packets were being sent to the web server. The packets were sent by an unfamiliar IP address. These SYN packets did not receive corresponding ACK responses to complete the TCP three-way handshake. The server failed to respond to normal user traffic indicating resource exhaustion. This event could be a Denial of Service (DoS) attack, probably a SYN flood attack.  |  |
+|  |  |
+
+| Section 2: Explain how the attack is causing the website to malfunction |
+| :---- |
+| When website visitors try to establish a connection with the web server, a three-way handshake occurs using the TCP protocol. Explain the three steps of the handshake: “SYN” packet: SYN stands for “synchronize”. It is the initial request from an employee visitor trying to connect to a webpage hosted on the web server. “SYN ACK” packet: It stands for “synchronize acknowledge”. It is the web server’s response to the visitor’s request agreeing to the connection. “ACK” packet: It stands for “acknowledge”. The client receives the server’s “SYN ACK” and responds with an “ACk” packet confirming the connection.The completion of this step marks the beginning of data flow between the client and the server.  When a large number of SYN packets are sent all at once, the web server becomes flooded because the server sends corresponding SYN ACK packets and waits for the final ACK packet that never comes. This leads to a SYN flood attack. The logs indicate that a large number of SYN requests coming from an unfamiliar IP address are being sent to the server.The TCP handshake is not completed because few or no corresponding ACK packets were sent. SInce the handshake was not completed, the resources needed for the complete connection are flooded. Eventually, the server’s connection limit is reached, causing the connection timeout error message making the website inaccessible. |
+
